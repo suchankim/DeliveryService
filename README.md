@@ -26,6 +26,11 @@
 ### 3) 요리시작
 ![image](https://github.com/suchankim/DeliveryService/assets/26198168/74a4f8e4-f58b-4d00-9d6d-2a6d56e121fc)
 
+### 4) 요리종료
+![image](https://github.com/suchankim/DeliveryService/assets/26198168/c5d7e656-10ae-467a-8f81-8aa3e0bcf2ba)
+
+### 5) KAFKA모니터링
+![image](https://github.com/suchankim/DeliveryService/assets/26198168/764340ae-e85c-4f97-acc2-a0904665eb11)
 
 ```
 cd kafka
