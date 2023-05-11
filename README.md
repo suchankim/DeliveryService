@@ -3,7 +3,7 @@
 ## 1.EventStorming Model : Design Level
 ![image](https://github.com/suchankim/DeliveryService/assets/26198168/1ade2296-8f60-473b-a136-c1cf907ccfb0)
 
-## Before Running Services
+## 2.Saga (Pub / Sub)
 ### Make sure there is a Kafka server running
 ```
 cd kafka
