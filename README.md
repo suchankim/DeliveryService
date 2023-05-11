@@ -13,6 +13,20 @@
 ### 3) Delivery.java
 ![image](https://github.com/suchankim/DeliveryService/assets/26198168/b3ed5831-81b2-4ad3-bf73-6e90ed45fc04)
 
+## 3.CQRS
+![image](https://github.com/suchankim/DeliveryService/assets/26198168/a1243b1d-1c9e-4b73-b613-174841f87c1e)
+
+## 4.Compensation / Correlation
+### 1) 주문
+![image](https://github.com/suchankim/DeliveryService/assets/26198168/5617cf43-ecef-4f20-a282-368a8d8e9da0)
+
+### 2) 주문수용
+![image](https://github.com/suchankim/DeliveryService/assets/26198168/ddbea29c-3cbf-4298-8d33-0f532fd73193)
+
+### 3) 요리시작
+![image](https://github.com/suchankim/DeliveryService/assets/26198168/74a4f8e4-f58b-4d00-9d6d-2a6d56e121fc)
+
+
 ```
 cd kafka
 docker-compose up
