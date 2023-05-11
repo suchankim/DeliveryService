@@ -32,6 +32,7 @@
 ### 5) KAFKA모니터링
 ![image](https://github.com/suchankim/DeliveryService/assets/26198168/764340ae-e85c-4f97-acc2-a0904665eb11)
 
+==========================================================================================================
 ```
 cd kafka
 docker-compose up
