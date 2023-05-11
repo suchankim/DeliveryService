@@ -14,15 +14,10 @@ public class Cooking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private Long orderId;
-
     private String foodCode;
-
     private String storeId;
-
     private String customerId;
-
     private String status;
 
     @ElementCollection
@@ -39,22 +34,43 @@ public class Cooking {
     }
 
     public void accept() {
+        
         OrderAccepted orderAccepted = new OrderAccepted(this);
+        repository().findByOrderId(orderAccepted.getOrderId()).ifPresent(cooking->{
+            
+            cooking.setStatus("ACCEPTED"); // do something
+            repository().save(cooking);
+         });
         orderAccepted.publishAfterCommit();
     }
 
     public void reject() {
         OrderRejected orderRejected = new OrderRejected(this);
+        repository().findByOrderId(orderRejected.getOrderId()).ifPresent(cooking->{
+            
+            cooking.setStatus("REJECTED"); // do something
+            repository().save(cooking);
+         });
         orderRejected.publishAfterCommit();
     }
 
     public void start() {
         CookStarted cookStarted = new CookStarted(this);
+        repository().findByOrderId(cookStarted.getOrderId()).ifPresent(cooking->{
+            
+            cooking.setStatus("STARTED"); // do something
+            repository().save(cooking);
+         });
         cookStarted.publishAfterCommit();
     }
 
     public void finish() {
         CookFinished cookFinished = new CookFinished(this);
+        repository().findByOrderId(cookFinished.getOrderId()).ifPresent(cooking->{
+            
+            cooking.setStatus("COOKED"); // do something
+            repository().save(cooking);
+         });
         cookFinished.publishAfterCommit();
     }
 
@@ -62,19 +78,16 @@ public class Cooking {
         /** Example 1:  new item 
         Cooking cooking = new Cooking();
         repository().save(cooking);
-
         */
 
-        /** Example 2:  finding and process
+        /** Example 2:  finding and process*/
         
-        repository().findById(paid.get???()).ifPresent(cooking->{
+        repository().findByOrderId(paid.getOrderId()).ifPresent(cooking->{
             
-            cooking // do something
+            cooking.setStatus("PAID"); // do something
             repository().save(cooking);
-
-
          });
-        */
+        
 
     }
 
@@ -85,25 +98,25 @@ public class Cooking {
 
         */
 
-        /** Example 2:  finding and process
+        /** Example 2:  finding and process*/
         
-        repository().findById(orderCanceled.get???()).ifPresent(cooking->{
+        repository().findByOrderId(orderCanceled.getId()).ifPresent(cooking->{
             
-            cooking // do something
+            cooking.setStatus("CANCELED"); // do something
             repository().save(cooking);
-
-
          });
-        */
-
     }
 
     public static void sendOrderData(OrderPlaced orderPlaced) {
-        /** Example 1:  new item 
+        /** Example 1:  new item */
         Cooking cooking = new Cooking();
+        cooking.setOrderId(orderPlaced.getId());
+        cooking.setFoodCode(orderPlaced.getFoodCode());
+        cooking.setStoreId(orderPlaced.getStoreId());
+        cooking.setCustomerId(orderPlaced.getCustomerId());
+        cooking.setStatus("ORDERED");
+        cooking.setOptions(orderPlaced.getOptions());
         repository().save(cooking);
-
-        */
 
         /** Example 2:  finding and process
         
@@ -111,8 +124,6 @@ public class Cooking {
             
             cooking // do something
             repository().save(cooking);
-
-
          });
         */
 

@@ -15,9 +15,7 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private Long orderId;
-
     private Integer price;
 
     @PostPersist
@@ -34,11 +32,12 @@ public class Payment {
     }
 
     public static void pay(OrderPlaced orderPlaced) {
-        /** Example 1:  new item 
+        /** Example 1:  new item */
         Payment payment = new Payment();
+        payment.setOrderId(orderPlaced.getId());
         repository().save(payment);
 
-        */
+        
 
         /** Example 2:  finding and process
         
@@ -46,7 +45,6 @@ public class Payment {
             
             payment // do something
             repository().save(payment);
-
 
          });
         */

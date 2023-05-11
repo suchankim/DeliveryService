@@ -16,33 +16,27 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String customerId;
-
     private String storeId;
-
     private String foodCode;
-
     private String address;
 
     @ElementCollection
     private List<String> options;
-
     private String status;
-
     private Integer price;
 
     @PostPersist
     public void onPostPersist() {
         OrderPlaced orderPlaced = new OrderPlaced(this);
-        orderPlaced.publishAfterCommit();
-
-        OrderCanceled orderCanceled = new OrderCanceled(this);
-        orderCanceled.publishAfterCommit();
+        orderPlaced.publishAfterCommit();       
     }
 
     @PreRemove
-    public void onPreRemove() {}
+    public void onPreRemove() {
+        OrderCanceled orderCanceled = new OrderCanceled(this);
+        orderCanceled.publishAfterCommit();
+    }
 
     public static OrderRepository repository() {
         OrderRepository orderRepository = FrontApplication.applicationContext.getBean(
@@ -55,99 +49,83 @@ public class Order {
         /** Example 1:  new item 
         Order order = new Order();
         repository().save(order);
-
         */
 
-        /** Example 2:  finding and process
+        /** Example 2:  finding and process*/
         
-        repository().findById(paid.get???()).ifPresent(order->{
+        repository().findById(paid.getOrderId()).ifPresent(order->{
             
-            order // do something
+            order.setStatus("PAID"); // do something
             repository().save(order);
-
-
          });
-        */
-
+        
     }
 
     public static void updateStatus(OrderAccepted orderAccepted) {
         /** Example 1:  new item 
         Order order = new Order();
         repository().save(order);
-
         */
 
-        /** Example 2:  finding and process
+        /** Example 2:  finding and process*/
         
-        repository().findById(orderAccepted.get???()).ifPresent(order->{
+        repository().findById(orderAccepted.getOrderId()).ifPresent(order->{
             
-            order // do something
+            order.setStatus("ACCEPTED"); // do something
             repository().save(order);
 
-
          });
-        */
-
+        
     }
 
     public static void updateStatus(OrderRejected orderRejected) {
         /** Example 1:  new item 
         Order order = new Order();
         repository().save(order);
-
         */
 
-        /** Example 2:  finding and process
+        /** Example 2:  finding and process*/
         
-        repository().findById(orderRejected.get???()).ifPresent(order->{
+        repository().findById(orderRejected.getOrderId()).ifPresent(order->{
             
-            order // do something
+            order.setStatus("REJECTED"); // do something
             repository().save(order);
 
-
          });
-        */
-
+        
     }
 
     public static void updateStatus(CookStarted cookStarted) {
         /** Example 1:  new item 
         Order order = new Order();
         repository().save(order);
-
         */
 
-        /** Example 2:  finding and process
+        /** Example 2:  finding and process*/
         
-        repository().findById(cookStarted.get???()).ifPresent(order->{
+        repository().findById(cookStarted.getOrderId()).ifPresent(order->{
             
-            order // do something
+            order.setStatus("COOKING"); // do something
             repository().save(order);
 
-
          });
-        */
-
+        
     }
 
     public static void updateStatus(CookFinished cookFinished) {
         /** Example 1:  new item 
         Order order = new Order();
         repository().save(order);
-
         */
 
-        /** Example 2:  finding and process
+        /** Example 2:  finding and process*/
         
-        repository().findById(cookFinished.get???()).ifPresent(order->{
+        repository().findById(cookFinished.getOrderId()).ifPresent(order->{
             
-            order // do something
+            order.setStatus("COOKED"); // do something
             repository().save(order);
 
-
          });
-        */
-
+        
     }
 }

@@ -16,26 +16,42 @@ public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private Long orderId;
-
     private String address;
-
     private String status;
-
     private String storeId;
 
     @PostPersist
     public void onPostPersist() {
-        Picked picked = new Picked(this);
-        picked.publishAfterCommit();
-
-        Delivered delivered = new Delivered(this);
-        delivered.publishAfterCommit();
+        // Picked picked = new Picked(this);
+        // picked.publishAfterCommit();    
     }
 
     @PreUpdate
-    public void onPreUpdate() {}
+    public void onPreUpdate() {
+        // Delivered delivered = new Delivered(this);
+        // delivered.publishAfterCommit();
+    }
+
+    public void pick() {
+        Picked picked = new Picked(this);
+        repository().findByOrderId(picked.getOrderId()).ifPresent(delivery->{
+            
+            delivery.setStatus("PICKED"); // do something
+            repository().save(delivery);
+         });
+        picked.publishAfterCommit();
+    }
+
+    public void confirmdelivery() {
+        Delivered delivered = new Delivered(this);
+        repository().findByOrderId(delivered.getOrderId()).ifPresent(delivery->{
+            
+            delivery.setStatus("DELIVERED"); // do something
+            repository().save(delivery);
+         });
+        delivered.publishAfterCommit();
+    }
 
     public static DeliveryRepository repository() {
         DeliveryRepository deliveryRepository = RiderApplication.applicationContext.getBean(
@@ -48,28 +64,26 @@ public class Delivery {
         /** Example 1:  new item 
         Delivery delivery = new Delivery();
         repository().save(delivery);
-
         */
 
-        /** Example 2:  finding and process
+        /** Example 2:  finding and process*/
         
-        repository().findById(cookFinished.get???()).ifPresent(delivery->{
+        repository().findByOrderId(cookFinished.getOrderId()).ifPresent(delivery->{
             
-            delivery // do something
+            delivery.setStatus("COOKED"); // do something
             repository().save(delivery);
-
-
          });
-        */
 
     }
 
     public static void sendOrderData(OrderPlaced orderPlaced) {
-        /** Example 1:  new item 
+        /** Example 1:  new item */
         Delivery delivery = new Delivery();
+        delivery.setOrderId(orderPlaced.getId());
+        delivery.setAddress(orderPlaced.getAddress());
+        delivery.setStatus("ORDERED");
+        delivery.setStoreId(orderPlaced.getStoreId());
         repository().save(delivery);
-
-        */
 
         /** Example 2:  finding and process
         
@@ -77,8 +91,6 @@ public class Delivery {
             
             delivery // do something
             repository().save(delivery);
-
-
          });
         */
 
